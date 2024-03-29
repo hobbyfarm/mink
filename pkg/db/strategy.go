@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/acorn-io/mink/pkg/types"
+	"github.com/hobbyfarm/mink/pkg/types"
 	"gorm.io/gorm"
 	apierror "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"

@@ -3,7 +3,7 @@ package strategy
 import (
 	"context"
 
-	"github.com/acorn-io/mink/pkg/types"
+	"github.com/hobbyfarm/mink/pkg/types"
 	metainternalversion "k8s.io/apimachinery/pkg/apis/meta/internalversion"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"

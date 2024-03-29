@@ -3,7 +3,7 @@ package authz
 import (
 	"context"
 
-	"github.com/acorn-io/mink/pkg/authz/binding"
+	"github.com/hobbyfarm/mink/pkg/authz/binding"
 	"github.com/sirupsen/logrus"
 	"k8s.io/apiserver/pkg/authentication/user"
 	"k8s.io/apiserver/pkg/authorization/authorizer"

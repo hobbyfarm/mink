@@ -4,7 +4,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/acorn-io/mink/pkg/types"
+	"github.com/hobbyfarm/mink/pkg/types"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation"
 	"k8s.io/apimachinery/pkg/util/validation/field"

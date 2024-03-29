@@ -2,9 +2,9 @@ package aggregator
 
 import (
 	"fmt"
-	minkopenapi "github.com/acorn-io/mink/pkg/openapi"
-	"github.com/acorn-io/mink/pkg/proxy"
-	minkserver "github.com/acorn-io/mink/pkg/server"
+	minkopenapi "github.com/hobbyfarm/mink/pkg/openapi"
+	"github.com/hobbyfarm/mink/pkg/proxy"
+	minkserver "github.com/hobbyfarm/mink/pkg/server"
 	"github.com/sirupsen/logrus"
 	"k8s.io/api/apidiscovery/v2beta1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"

@@ -4,8 +4,8 @@ import (
 	"context"
 	"strings"
 
-	"github.com/acorn-io/mink/pkg/stores"
-	"github.com/acorn-io/mink/pkg/types"
+	"github.com/hobbyfarm/mink/pkg/stores"
+	"github.com/hobbyfarm/mink/pkg/types"
 	"github.com/sirupsen/logrus"
 	authorizationv1 "k8s.io/api/authorization/v1"
 	"k8s.io/apimachinery/pkg/runtime"

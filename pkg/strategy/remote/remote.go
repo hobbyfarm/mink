@@ -3,8 +3,8 @@ package remote
 import (
 	"context"
 
-	"github.com/acorn-io/mink/pkg/strategy"
-	"github.com/acorn-io/mink/pkg/types"
+	"github.com/hobbyfarm/mink/pkg/strategy"
+	"github.com/hobbyfarm/mink/pkg/types"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"

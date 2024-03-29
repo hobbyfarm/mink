@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/acorn-io/mink/pkg/db/glogrus"
-	"github.com/acorn-io/mink/pkg/strategy"
-	"github.com/acorn-io/mink/pkg/types"
+	"github.com/hobbyfarm/mink/pkg/db/glogrus"
+	"github.com/hobbyfarm/mink/pkg/strategy"
+	"github.com/hobbyfarm/mink/pkg/types"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/sqlite"

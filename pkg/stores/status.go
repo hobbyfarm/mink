@@ -3,7 +3,7 @@ package stores
 import (
 	"context"
 
-	"github.com/acorn-io/mink/pkg/strategy"
+	"github.com/hobbyfarm/mink/pkg/strategy"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"

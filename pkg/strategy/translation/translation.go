@@ -4,8 +4,8 @@ import (
 	"context"
 	"strings"
 
-	"github.com/acorn-io/mink/pkg/strategy"
-	"github.com/acorn-io/mink/pkg/types"
+	"github.com/hobbyfarm/mink/pkg/strategy"
+	"github.com/hobbyfarm/mink/pkg/types"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/runtime"

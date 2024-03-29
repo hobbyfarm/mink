@@ -13,8 +13,8 @@ import (
 	"time"
 
 	"github.com/acorn-io/broadcaster"
-	"github.com/acorn-io/mink/pkg/channel"
-	"github.com/acorn-io/mink/pkg/datatypes"
+	"github.com/hobbyfarm/mink/pkg/channel"
+	"github.com/hobbyfarm/mink/pkg/datatypes"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 	"k8s.io/apimachinery/pkg/runtime/schema"

@@ -3,8 +3,8 @@ package translation
 import (
 	"context"
 
-	"github.com/acorn-io/mink/pkg/strategy"
-	mtypes "github.com/acorn-io/mink/pkg/types"
+	"github.com/hobbyfarm/mink/pkg/strategy"
+	mtypes "github.com/hobbyfarm/mink/pkg/types"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apiserver/pkg/storage"
 	kclient "sigs.k8s.io/controller-runtime/pkg/client"

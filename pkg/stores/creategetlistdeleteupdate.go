@@ -1,7 +1,7 @@
 package stores
 
 import (
-	"github.com/acorn-io/mink/pkg/strategy"
+	"github.com/hobbyfarm/mink/pkg/strategy"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apiserver/pkg/registry/rest"
 )

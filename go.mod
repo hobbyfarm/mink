@@ -1,4 +1,4 @@
-module github.com/acorn-io/mink
+module github.com/hobbyfarm/mink
 
 go 1.21.5
 

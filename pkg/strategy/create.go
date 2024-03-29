@@ -3,8 +3,8 @@ package strategy
 import (
 	"context"
 
-	"github.com/acorn-io/mink/pkg/types"
-	"github.com/acorn-io/mink/pkg/validator"
+	"github.com/hobbyfarm/mink/pkg/types"
+	"github.com/hobbyfarm/mink/pkg/validator"
 	"k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"

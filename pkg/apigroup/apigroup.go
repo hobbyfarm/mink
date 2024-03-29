@@ -1,7 +1,7 @@
 package apigroup
 
 import (
-	"github.com/acorn-io/mink/pkg/serializer"
+	"github.com/hobbyfarm/mink/pkg/serializer"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	runtimeserializer "k8s.io/apimachinery/pkg/runtime/serializer"
