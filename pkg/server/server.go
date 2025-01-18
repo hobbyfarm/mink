@@ -8,6 +8,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/serializer"
 	"k8s.io/apimachinery/pkg/util/errors"
 	"k8s.io/apimachinery/pkg/util/sets"
+	"k8s.io/apimachinery/pkg/version"
 	"k8s.io/apiserver/pkg/authentication/authenticator"
 	"k8s.io/apiserver/pkg/authentication/request/anonymous"
 	"k8s.io/apiserver/pkg/authentication/request/union"
@@ -40,6 +41,7 @@ type Config struct {
 	HTTPSListenPort              int
 	LongRunningVerbs             []string
 	LongRunningResources         []string
+	Authentication               *options.DelegatingAuthenticationOptions
 	Scheme                       *runtime.Scheme
 	CodecFactory                 *serializer.CodecFactory
 	DefaultOptions               *options.RecommendedOptions
@@ -101,6 +103,14 @@ func Prep(config *Config) (*server.RecommendedConfig, error) {
 
 	opts := config.DefaultOptions
 	opts.SecureServing.BindPort = config.HTTPSListenPort
+
+	if config.Authentication != nil {
+		opts.Authentication = config.Authentication
+	} else {
+		opts.Authentication.SkipInClusterLookup = config.SkipInClusterLookup
+		opts.Authentication.RemoteKubeConfigFileOptional = config.RemoteKubeConfigFileOptional
+	}
+
 	opts.Authentication.SkipInClusterLookup = config.SkipInClusterLookup
 	opts.Authentication.RemoteKubeConfigFileOptional = config.RemoteKubeConfigFileOptional
 
@@ -157,6 +167,10 @@ func New(config *Config) (*Server, error) {
 			}
 			return err
 		})
+	}
+
+	serverConfig.Version = &version.Info{
+		Major: config.Version,
 	}
 
 	serverConfig.AddReadyzChecks(config.ReadinessCheckers...)
