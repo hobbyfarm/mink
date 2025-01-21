@@ -6,7 +6,7 @@ import (
 	"github.com/hobbyfarm/mink/pkg/proxy"
 	minkserver "github.com/hobbyfarm/mink/pkg/server"
 	"github.com/sirupsen/logrus"
-	"k8s.io/api/apidiscovery/v2beta1"
+	v2 "k8s.io/api/apidiscovery/v2"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/sets"
@@ -135,10 +135,10 @@ func NewAggregator(config *Config) (*minkserver.Server, error) {
 				// this registration powers the ability of the aggregator to correctly return v2beta1.APIVersionDiscovery
 				// lists to clients. this is necessary mostly to power calls such as `kubectl api-resources` which requests
 				// `/apis` but returning specifically `g=apidiscovery.k8s.io;v=v2beta1;as=APIGroupDiscoveryList`
-				svr.AggregatedDiscoveryGroupManager.AddGroupVersion(gv.Group, v2beta1.APIVersionDiscovery{
+				svr.AggregatedDiscoveryGroupManager.AddGroupVersion(gv.Group, v2.APIVersionDiscovery{
 					Version:   gv.Version,
 					Resources: apiResourceDiscovery,
-					Freshness: v2beta1.DiscoveryFreshnessCurrent,
+					Freshness: v2.DiscoveryFreshnessCurrent,
 				})
 			}
 

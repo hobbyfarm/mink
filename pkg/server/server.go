@@ -19,6 +19,7 @@ import (
 	"k8s.io/apiserver/pkg/server/options"
 	"k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/rest"
+	"k8s.io/component-base/version"
 	openapicommon "k8s.io/kube-openapi/pkg/common"
 	netutils "k8s.io/utils/net"
 	"net"
@@ -40,6 +41,7 @@ type Config struct {
 	HTTPSListenPort              int
 	LongRunningVerbs             []string
 	LongRunningResources         []string
+	Authentication               *options.DelegatingAuthenticationOptions
 	Scheme                       *runtime.Scheme
 	CodecFactory                 *serializer.CodecFactory
 	DefaultOptions               *options.RecommendedOptions
@@ -47,6 +49,7 @@ type Config struct {
 	SkipInClusterLookup          bool
 	RemoteKubeConfigFileOptional bool
 	IgnoreStartFailure           bool
+	EffectiveVersion             version.EffectiveVersion
 	Middleware                   []func(http.Handler) http.Handler
 	Authenticator                authenticator.Request
 	Authorization                authorizer.Authorizer
@@ -101,6 +104,14 @@ func Prep(config *Config) (*server.RecommendedConfig, error) {
 
 	opts := config.DefaultOptions
 	opts.SecureServing.BindPort = config.HTTPSListenPort
+
+	if config.Authentication != nil {
+		opts.Authentication = config.Authentication
+	} else {
+		opts.Authentication.SkipInClusterLookup = config.SkipInClusterLookup
+		opts.Authentication.RemoteKubeConfigFileOptional = config.RemoteKubeConfigFileOptional
+	}
+
 	opts.Authentication.SkipInClusterLookup = config.SkipInClusterLookup
 	opts.Authentication.RemoteKubeConfigFileOptional = config.RemoteKubeConfigFileOptional
 
@@ -136,6 +147,7 @@ func New(config *Config) (*Server, error) {
 	serverConfig.OpenAPIV3Config = server.DefaultOpenAPIV3Config(config.OpenAPIConfig, openapi.NewDefinitionNamer(config.Scheme))
 	serverConfig.OpenAPIV3Config.Info.Title = config.Name
 	serverConfig.OpenAPIV3Config.Info.Version = config.Version
+	serverConfig.EffectiveVersion = config.EffectiveVersion
 
 	serverConfig.LongRunningFunc = filters.BasicLongRunningRequestCheck(
 		sets.NewString(config.LongRunningVerbs...),
@@ -143,7 +155,7 @@ func New(config *Config) (*Server, error) {
 	)
 
 	if config.Authenticator != nil {
-		serverConfig.Authentication.Authenticator = union.New(config.Authenticator, anonymous.NewAuthenticator())
+		serverConfig.Authentication.Authenticator = union.New(config.Authenticator, anonymous.NewAuthenticator(nil))
 	}
 	if config.Authorization != nil {
 		serverConfig.Authorization.Authorizer = config.Authorization
