@@ -29,9 +29,15 @@ func getListType(obj kclient.Object, scheme *runtime.Scheme) kclient.ObjectList 
 	return objList.(kclient.ObjectList)
 }
 
+func NewSimpleTranslationStrategyWithOptions(translator SimpleTranslator, strategy strategy.CompleteStrategy,
+	options TranslationOptions) strategy.CompleteStrategy {
+	pubType := translator.ToPublic(strategy.New())
+	return NewTranslationStrategy(NewSimpleTranslator(translator, pubType, strategy.Scheme()), strategy, options)
+}
+
 func NewSimpleTranslationStrategy(translator SimpleTranslator, strategy strategy.CompleteStrategy) strategy.CompleteStrategy {
 	pubType := translator.ToPublic(strategy.New())
-	return NewTranslationStrategy(NewSimpleTranslator(translator, pubType, strategy.Scheme()), strategy)
+	return NewTranslationStrategy(NewSimpleTranslator(translator, pubType, strategy.Scheme()), strategy, DefaultTranslationOptions())
 }
 
 func NewSimpleTranslator(translator SimpleTranslator, pubType mtypes.Object, scheme *runtime.Scheme) Translator {

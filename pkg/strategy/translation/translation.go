@@ -27,10 +27,21 @@ type Translator interface {
 	NewPublicList() types.ObjectList
 }
 
-func NewTranslationStrategy(translator Translator, strategy strategy.CompleteStrategy) *Strategy {
+type TranslationOptions struct {
+	AppendPublicUIDSegment bool
+}
+
+func DefaultTranslationOptions() TranslationOptions {
+	return TranslationOptions{
+		AppendPublicUIDSegment: true,
+	}
+}
+
+func NewTranslationStrategy(translator Translator, strategy strategy.CompleteStrategy, options TranslationOptions) *Strategy {
 	return &Strategy{
 		strategy:   strategy,
 		translator: translator,
+		options:    options,
 		pubGVK:     types.MustGetGVK(translator.NewPublic(), strategy.Scheme()),
 	}
 }
@@ -39,6 +50,7 @@ type Strategy struct {
 	strategy   strategy.CompleteStrategy
 	translator Translator
 	pubGVK     schema.GroupVersionKind
+	options    TranslationOptions
 }
 
 func (t *Strategy) toPublicObjects(ctx context.Context, objs ...runtime.Object) ([]types.Object, error) {
@@ -52,8 +64,10 @@ func (t *Strategy) toPublicObjects(ctx context.Context, objs ...runtime.Object) 
 		return nil, err
 	}
 	for _, obj := range result {
-		if uids[obj.GetUID()] {
-			obj.SetUID(obj.GetUID() + "-p")
+		if t.options.AppendPublicUIDSegment {
+			if uids[obj.GetUID()] {
+				obj.SetUID(obj.GetUID() + "-p")
+			}
 		}
 
 		// Reset the GVK to the public GVK
@@ -122,7 +136,9 @@ func (t *Strategy) fromPublic(ctx context.Context, obj types.Object) (types.Obje
 	if err != nil {
 		return nil, err
 	}
-	newObj.SetUID(ktypes.UID(strings.TrimSuffix(string(newObj.GetUID()), "-p")))
+	if t.options.AppendPublicUIDSegment {
+		newObj.SetUID(ktypes.UID(strings.TrimSuffix(string(newObj.GetUID()), "-p")))
+	}
 	return newObj, nil
 }
 
